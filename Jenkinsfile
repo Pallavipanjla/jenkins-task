@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('pallavi')
         IMAGE_NAME = 'pallavipc18/jenkins-task'
     }
 
@@ -27,7 +26,8 @@ pipeline {
 
         stage('Push to DockerHub') {
             steps {
-                withDockerRegistry(credentialsId: 'pallavi') {
+                withCredentials([usernamePassword(credentialsId: 'pallavi', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                     sh 'docker push $IMAGE_NAME'
                 }
             }
