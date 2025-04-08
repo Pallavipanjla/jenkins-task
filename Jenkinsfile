@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
+        DOCKERHUB_CREDENTIALS = credentials('pallavi')
         IMAGE_NAME = 'pallavipc18/jenkins-task'
     }
 
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Push to DockerHub') {
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub-credentials') {
+                withDockerRegistry(credentialsId: 'pallavi') {
                     sh 'docker push $IMAGE_NAME'
                 }
             }
